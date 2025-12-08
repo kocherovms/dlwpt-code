@@ -407,7 +407,7 @@ class ClassificationTrainingApp:
         metrics_dict['pr/f1_score'] = \
             2 * (precision * recall) / (precision + recall)
 
-        threshold = torch.linspace(1, 0)
+        threshold = torch.linspace(1, 0, 100)
         tpr = (metrics_t[None, METRICS_PRED_P_NDX, posLabel_mask] >= threshold[:, None]).sum(1).float() / pos_count
         fpr = (metrics_t[None, METRICS_PRED_P_NDX, negLabel_mask] >= threshold[:, None]).sum(1).float() / neg_count
         fp_diff = fpr[1:]-fpr[:-1]

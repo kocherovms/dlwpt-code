@@ -2,6 +2,8 @@
 tools
 *_old
 *.hdf5
+runs/
+runs.bak/
 
 .ipynb_checkpoints/
 __pycache__/

@@ -68,7 +68,7 @@ def match_and_score(detections, truth, threshold=0.5, threshold_mal=0.5):
                                  else (2 if d[1] < threshold
                                        else 3) for d in detections])
 
-    confusion = np.zeros((3, 4), dtype=np.int)
+    confusion = np.zeros((3, 4), dtype=int)
     if len(detected_xyz) == 0:
         for tn in true_nodules:
             confusion[2 if tn.isMal_bool else 1, 0] += 1
@@ -78,8 +78,8 @@ def match_and_score(detections, truth, threshold=0.5, threshold_mal=0.5):
     else:
         normalized_dists = np.linalg.norm(truth_xyz[:, None] - detected_xyz[None], ord=2, axis=-1) / truth_diams[:, None]
         matches = (normalized_dists < 0.7)
-        unmatched_detections = np.ones(len(detections), dtype=np.bool)
-        matched_true_nodules = np.zeros(len(true_nodules), dtype=np.int)
+        unmatched_detections = np.ones(len(detections), dtype=bool)
+        matched_true_nodules = np.zeros(len(true_nodules), dtype=int)
         for i_tn, i_detection in zip(*matches.nonzero()):
             matched_true_nodules[i_tn] = max(matched_true_nodules[i_tn], detected_classes[i_detection])
             unmatched_detections[i_detection] = False
@@ -320,7 +320,7 @@ class NoduleAnalysisApp:
             val_list + train_list,
             "Series",
         )
-        all_confusion = np.zeros((3, 4), dtype=np.int)
+        all_confusion = np.zeros((3, 4), dtype=int)
         for _, series_uid in series_iter:
             ct = getCt(series_uid)
             mask_a = self.segmentCt(ct, series_uid)
